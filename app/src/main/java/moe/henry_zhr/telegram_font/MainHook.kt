@@ -20,14 +20,13 @@ class MainHook : IXposedHookLoadPackage {
       String::class.java,
       object : XC_MethodHook() {
         override fun beforeHookedMethod(param: MethodHookParam) {
-          when (param.args[1]) {
-            "fonts/rmediumitalic.ttf" -> param.result =
-              Typeface.Builder("/system/fonts/CodeNewRomanItalicNerdFontCompleteMono.otf")
-            "fonts/rmedium.ttf" -> param.result =
-              Typeface.Builder("/system/fonts/CodeNewRomanBoldNerdFontCompleteMono.otf")
-            "fonts/ritalic.ttf" -> param.result =
-              Typeface.Builder("/system/fonts/CodeNewRomanItalicNerdFontCompleteMono.otf")
-          }
+          if (param.args[1] in arrayOf(
+              "fonts/rmediumitalic.ttf",
+              "fonts/rmedium.ttf",
+              "fonts/ritalic.ttf"
+            )
+          )
+            param.result = Typeface.Builder("/system/fonts/EmptyFont.ttf")
         }
       })
   }
