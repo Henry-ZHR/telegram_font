@@ -11,8 +11,6 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 @Keep
 class MainHook : IXposedHookLoadPackage {
   override fun handleLoadPackage(lpparam: LoadPackageParam) {
-    if (lpparam.packageName != TELEGRAM_PACKAGE_NAME)
-      return
     XposedHelpers.findAndHookConstructor(
       "android.graphics.Typeface.Builder",
       lpparam.classLoader,
@@ -29,9 +27,5 @@ class MainHook : IXposedHookLoadPackage {
             param.result = Typeface.Builder("/system/fonts/EmptyFont.ttf")
         }
       })
-  }
-
-  companion object {
-    private const val TELEGRAM_PACKAGE_NAME = "org.telegram.messenger"
   }
 }
